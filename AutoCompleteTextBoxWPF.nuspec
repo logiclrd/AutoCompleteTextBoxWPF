@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>AutoCompleteTextBoxWPF</id>
+    <version>$version$</version>
+    <description>Autocomplete text box for WPF</description>
+    <authors>JonathanG@iQmetrix.com</authors>
+  </metadata>
+</package>
