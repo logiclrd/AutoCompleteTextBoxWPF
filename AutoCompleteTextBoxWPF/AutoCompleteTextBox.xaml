@@ -2,11 +2,20 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:AutoCompleteTextBoxWPF"
-             Background="White" BorderBrush="{Binding ElementName=txtInput, Path=BorderBrush}" BorderThickness="{Binding ElementName=txtInput, Path=BorderThickness}">
-    <StackPanel Name="spRoot" Margin="{Binding Margin}">
+             Foreground="{Binding ElementName=txtInput, Path=Foreground}"
+             Background="{Binding ElementName=txtInput, Path=Background}"
+             BorderBrush="{Binding ElementName=txtInput, Path=BorderBrush}"
+             BorderThickness="{Binding ElementName=txtInput, Path=BorderThickness}">
+    <UserControl.Template>
+        <ControlTemplate TargetType="{x:Type UserControl}">
+            <Border Background="{TemplateBinding Background}" Margin="{TemplateBinding Padding}" Padding="0" SnapsToDevicePixels="true">
+                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Border>
+        </ControlTemplate>
+    </UserControl.Template>
+    <StackPanel Name="spRoot">
         <TextBox Name="txtInput"
                  AutoWordSelection="{Binding AutoWordSelection}"
-                 Background="{Binding Background}"
                  CaretBrush="{Binding CaretBrush}"
                  CharacterCasing="{Binding CharacterCasing}"
                  ContextMenu="{Binding ContextMenu}"
@@ -15,39 +24,39 @@
                  FontStretch="{Binding FontStretch}"
                  FontStyle="{Binding FontStyle}"
                  FontWeight="{Binding FontWeight}"
-                 Foreground="{Binding Foreground}"
                  HorizontalContentAlignment="{Binding HorizontalContentAlignment}"
                  HorizontalScrollBarVisibility="{Binding HorizontalScrollBarVisibility}"
                  IsInactiveSelectionHighlightEnabled="{Binding IsInactiveSelectionHighlightEnabled}"
                  IsReadOnly="{Binding IsReadOnly}"
                  IsReadOnlyCaretVisible="{Binding IsReadOnlyCaretVisible}"
                  IsUndoEnabled="{Binding IsUndoEnabled}"
+                 Margin="0"
                  MaxLength="{Binding MaxLength}"
                  MaxLines="{Binding MaxLines}"
                  MinLines="{Binding MinLines}"
-                 Padding="{Binding Padding}"
-                 SelectionBrush="{Binding SelectionBrush}"
-                 SelectionOpacity="{Binding SelectionOpacity}"
+                 Padding="0"
                  Text="{Binding Text}"
                  TextAlignment="{Binding TextAlignment}"
                  TextDecorations="{Binding TextDecorations}"
                  UndoLimit="{Binding UndoLimit}"
                  VerticalScrollBarVisibility="{Binding VerticalScrollBarVisibility}"
-                 MouseLeftButtonDown="txtInput_MouseLeftButtonDown"
-                 GotFocus="txtInput_GotFocus"
-                 LostFocus="txtInput_LostFocus"
+                 PreviewMouseLeftButtonDown="txtInput_PreviewMouseLeftButtonDown"
+                 GotKeyboardFocus="txtInput_GotKeyboardFocus"
+                 LostKeyboardFocus="txtInput_LostKeyboardFocus"
                  TextChanged="txtInput_TextChanged"
                  PreviewKeyDown="txtInput_PreviewKeyDown" />
-        <Popup Name="pAutoCompletePopup" PlacementTarget="{Binding ElementName=txtInput}">
+        <Popup Name="pAutoCompletePopup" PlacementTarget="{Binding ElementName=txtInput}" StaysOpen="True">
             <ListBox Name="lstAutoCompleteItems"
-                     Background="{Binding Background}"
+                     VirtualizingPanel.IsVirtualizing="False"
+                     Background="{Binding Background, ElementName=txtInput}"
                      FontFamily="{Binding FontFamily}"
                      FontSize="{Binding FontSize}"
                      FontStretch="{Binding FontStretch}"
                      FontStyle="{Binding FontStyle}"
                      FontWeight="{Binding FontWeight}"
-                     Foreground="{Binding Foreground}"
-                     HorizontalContentAlignment="{Binding HorizontalContentAlignment}">
+                     Foreground="{Binding Foreground, ElementName=txtInput}"
+                     HorizontalContentAlignment="{Binding HorizontalContentAlignment}"
+                     PreviewMouseLeftButtonDown="lstAutoCompleteItems_PreviewMouseLeftButtonDown">
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
                         <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment}" />

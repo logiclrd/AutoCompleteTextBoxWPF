@@ -3,5 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:autocomplete="clr-namespace:AutoCompleteTextBoxWPF;assembly=AutoCompleteTextBoxWPF"
         Title="MainWindow" SizeToContent="Height">
-    <autocomplete:AutoCompleteTextBox Name="txtTest" Margin="32" />
+    <StackPanel Margin="24">
+        <autocomplete:AutoCompleteTextBox Name="txtTest" Margin="8" />
+        <Button Margin="8" IsDefault="True" Name="cmdSubmit" Click="cmdSubmit_Click">Submit</Button>
+    </StackPanel>
 </Window>

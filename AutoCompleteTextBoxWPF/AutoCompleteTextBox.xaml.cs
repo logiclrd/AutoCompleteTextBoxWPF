@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -45,6 +46,22 @@ namespace AutoCompleteTextBoxWPF
 				{
 					RaiseEvent(new TextChangedEventArgs(TextChangedEvent, e.UndoAction, e.Changes));
 				};
+
+			this.SetBinding(
+				SelectionBrushProperty,
+				new Binding()
+				{
+					Source = txtInput,
+					Path = new PropertyPath(TextBox.SelectionBrushProperty),
+				});
+			
+			this.SetBinding(
+				SelectionOpacityProperty,
+				new Binding()
+				{
+					Source = txtInput,
+					Path = new PropertyPath(TextBox.SelectionOpacityProperty),
+				});
 		}
 
 		IAutoCompleteItemProvider _itemProvider;
@@ -357,17 +374,32 @@ namespace AutoCompleteTextBoxWPF
 			lstAutoCompleteItems.SelectedIndex = -1;
 		}
 
-		private void txtInput_GotFocus(object sender, RoutedEventArgs e)
+		private void txtInput_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+		{
+			var clickPosition = e.GetPosition(txtInput);
+
+			var hitTestResult = VisualTreeHelper.HitTest(txtInput, clickPosition);
+
+			var clickRecipient = hitTestResult?.VisualHit;
+
+			while (clickRecipient != null)
+			{
+				if (ReferenceEquals(clickRecipient, txtInput))
+				{
+					ResetOpen();
+					break;
+				}
+
+				clickRecipient = VisualTreeHelper.GetParent(clickRecipient);
+			}
+		}
+
+		private void txtInput_GotKeyboardFocus(object sender, RoutedEventArgs e)
 		{
 			ResetOpen();
 		}
 
-		private void txtInput_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-		{
-			ResetOpen();
-		}
-
-		private void txtInput_LostFocus(object sender, RoutedEventArgs e)
+		private void txtInput_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
 		{
 			ResetClose();
 		}
@@ -375,6 +407,11 @@ namespace AutoCompleteTextBoxWPF
 		private void txtInput_TextChanged(object sender, TextChangedEventArgs e)
 		{
 			_context.CurrentSearch = txtInput.Text;
+
+			if (_items.Any(item => item.IsVisible))
+				lstAutoCompleteItems.Visibility = Visibility.Visible;
+			else
+				lstAutoCompleteItems.Visibility = Visibility.Collapsed;
 		}
 
 		private void txtInput_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -394,7 +431,7 @@ namespace AutoCompleteTextBoxWPF
 			}
 			else if ((e.Key == Key.Up) || (e.Key == Key.Down)
 						|| (e.Key == Key.PageUp) || (e.Key == Key.PageDown)
-						|| (e.Key == Key.Home) || (e.Key == Key.End))
+						|| (Keyboard.Modifiers.HasFlag(ModifierKeys.Control) && ((e.Key == Key.Home) || (e.Key == Key.End))))
 			{
 				e.Handled = true;
 
@@ -438,13 +475,16 @@ namespace AutoCompleteTextBoxWPF
 						{
 							var container = (ListBoxItem)lstAutoCompleteItems.ItemContainerGenerator.ContainerFromItem(_items[newIndex - 1]);
 
-							double newScrollChange = scrollChange + container.ActualHeight;
+							scrollChange += container.ActualHeight;
 
-							if (newScrollChange >= scrollChangeLimit)
+							if (scrollChange >= scrollChangeLimit)
 								break;
 
 							newIndex--;
 						}
+
+						if (newIndex + 1 < _items.Count)
+							newIndex++;
 
 						if (newIndex < 0)
 							newIndex = 0;
@@ -471,13 +511,16 @@ namespace AutoCompleteTextBoxWPF
 						{
 							var container = (ListBoxItem)lstAutoCompleteItems.ItemContainerGenerator.ContainerFromItem(_items[newIndex]);
 
-							double newScrollChange = scrollChange + container.ActualHeight;
+							scrollChange += container.ActualHeight;
 
-							if (newScrollChange >= scrollChangeLimit)
+							if (scrollChange >= scrollChangeLimit)
 								break;
 
 							newIndex++;
 						}
+
+						if (newIndex > 0)
+							newIndex--;
 
 						while ((newIndex > 0) && !_items[newIndex].IsVisible)
 							newIndex--;
@@ -517,7 +560,35 @@ namespace AutoCompleteTextBoxWPF
 					newIndex = _items.Count - 1;
 
 				if (newIndex != currentIndex)
+				{
 					lstAutoCompleteItems.SelectedIndex = newIndex;
+					lstAutoCompleteItems.ScrollIntoView(_items[newIndex]);
+				}
+			}
+		}
+
+		private void lstAutoCompleteItems_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+		{
+			var clickPosition = e.GetPosition(lstAutoCompleteItems);
+
+			var hitTestResult = VisualTreeHelper.HitTest(lstAutoCompleteItems, clickPosition);
+
+			var clickRecipient = hitTestResult?.VisualHit;
+
+			while (clickRecipient != null)
+			{
+				if (clickRecipient is ListBoxItem itemContainer)
+				{
+					if (lstAutoCompleteItems.ItemContainerGenerator.ItemFromContainer(itemContainer) is AutoCompleteItem clickedItem)
+					{
+						txtInput.Text = clickedItem.Label;
+						ResetClose();
+					}
+
+					break;
+				}
+
+				clickRecipient = VisualTreeHelper.GetParent(clickRecipient);
 			}
 		}
 	}

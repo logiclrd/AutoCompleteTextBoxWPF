@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;
-
+using System.Windows.Controls;
+using System.Windows.Media.Animation;
 using AutoCompleteTextBoxWPF;
 
 namespace TestDriver
@@ -23,8 +24,15 @@ namespace TestDriver
 		{
 			public IEnumerable<string> GetItems()
 			{
-				return Directory.GetFiles(Environment.GetFolderPath(Environment.SpecialFolder.Windows));
+				return Directory.GetFiles(Environment.GetFolderPath(Environment.SpecialFolder.System));
 			}
+		}
+
+		private void cmdSubmit_Click(object sender, RoutedEventArgs e)
+		{
+			var animation = new DoubleAnimation() { From = 0.5, To = 1.0, Duration = new Duration(TimeSpan.FromSeconds(0.3)) };
+
+			cmdSubmit.BeginAnimation(Button.OpacityProperty, animation);
 		}
 	}
 }
