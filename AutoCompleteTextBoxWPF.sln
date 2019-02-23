@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoCompleteTextBoxWPF", "AutoCompleteTextBoxWPF\AutoCompleteTextBoxWPF.csproj", "{872AF54E-AC72-497E-8696-0BEFEEC3217C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDriver", "TestDriver\TestDriver.csproj", "{918A59BD-3581-4515-8BEE-E7449652E21E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{872AF54E-AC72-497E-8696-0BEFEEC3217C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{872AF54E-AC72-497E-8696-0BEFEEC3217C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{872AF54E-AC72-497E-8696-0BEFEEC3217C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{918A59BD-3581-4515-8BEE-E7449652E21E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{918A59BD-3581-4515-8BEE-E7449652E21E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{918A59BD-3581-4515-8BEE-E7449652E21E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{918A59BD-3581-4515-8BEE-E7449652E21E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
