@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ComboBoxAutoComplete
+namespace AutoCompleteTextBoxWPF
 {
 	public interface IAutoCompleteItemProvider
 	{

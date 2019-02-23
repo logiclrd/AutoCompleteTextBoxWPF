@@ -1,7 +1,7 @@
-﻿<UserControl x:Class="ComboBoxAutoComplete.AutoCompleteTextBox"
+﻿<UserControl x:Class="AutoCompleteTextBoxWPF.AutoCompleteTextBox"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:ComboBoxAutoComplete"
+             xmlns:local="clr-namespace:AutoCompleteTextBoxWPF"
              Background="White" BorderBrush="{Binding ElementName=txtInput, Path=BorderBrush}" BorderThickness="{Binding ElementName=txtInput, Path=BorderThickness}">
     <StackPanel Name="spRoot" Margin="{Binding Margin}">
         <TextBox Name="txtInput"

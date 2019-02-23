@@ -8,7 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 
-namespace ComboBoxAutoComplete
+namespace AutoCompleteTextBoxWPF
 {
 	public class AutoCompleteItem : DependencyObject, IDisposable
 	{
