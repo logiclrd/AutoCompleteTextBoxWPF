@@ -408,6 +408,14 @@ namespace AutoCompleteTextBoxWPF
 		{
 			_context.CurrentSearch = txtInput.Text;
 
+			while ((lstAutoCompleteItems.SelectedIndex >= 0) && !_items[lstAutoCompleteItems.SelectedIndex].IsVisible)
+			{
+				if (lstAutoCompleteItems.SelectedIndex + 1 < _items.Count)
+					lstAutoCompleteItems.SelectedIndex++;
+				else
+					lstAutoCompleteItems.SelectedIndex = -1;
+			}
+
 			if (_items.Any(item => item.IsVisible))
 				lstAutoCompleteItems.Visibility = Visibility.Visible;
 			else
