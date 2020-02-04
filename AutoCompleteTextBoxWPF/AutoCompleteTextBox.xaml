@@ -9,11 +9,11 @@
     <UserControl.Template>
         <ControlTemplate TargetType="{x:Type UserControl}">
             <Border Background="{TemplateBinding Background}" Margin="{TemplateBinding Padding}" Padding="0" SnapsToDevicePixels="true">
-                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
             </Border>
         </ControlTemplate>
     </UserControl.Template>
-    <StackPanel Name="spRoot">
+    <Grid Name="spRoot">
         <TextBox Name="txtInput"
                  AutoWordSelection="{Binding AutoWordSelection}"
                  CaretBrush="{Binding CaretBrush}"
@@ -39,6 +39,7 @@
                  TextAlignment="{Binding TextAlignment}"
                  TextDecorations="{Binding TextDecorations}"
                  UndoLimit="{Binding UndoLimit}"
+                 VerticalContentAlignment="{Binding VerticalContentAlignment}"
                  VerticalScrollBarVisibility="{Binding VerticalScrollBarVisibility}"
                  PreviewMouseLeftButtonDown="txtInput_PreviewMouseLeftButtonDown"
                  GotKeyboardFocus="txtInput_GotKeyboardFocus"
@@ -74,5 +75,5 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </Popup>
-    </StackPanel>
+    </Grid>
 </UserControl>

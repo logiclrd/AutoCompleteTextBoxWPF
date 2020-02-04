@@ -4,7 +4,9 @@
         xmlns:autocomplete="clr-namespace:AutoCompleteTextBoxWPF;assembly=AutoCompleteTextBoxWPF"
         Title="MainWindow" SizeToContent="Height">
     <StackPanel Margin="24">
-        <autocomplete:AutoCompleteTextBox Name="txtTest" Margin="8" />
+        <Grid Height="80">
+            <autocomplete:AutoCompleteTextBox Name="txtTest" Margin="8" VerticalContentAlignment="Center" Text="test" />
+        </Grid>
         <Button Margin="8" IsDefault="True" Name="cmdSubmit" Click="cmdSubmit_Click">Submit</Button>
     </StackPanel>
 </Window>

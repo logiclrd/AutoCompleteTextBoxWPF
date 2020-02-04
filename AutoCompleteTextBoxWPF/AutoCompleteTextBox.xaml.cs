@@ -590,6 +590,7 @@ namespace AutoCompleteTextBoxWPF
 					if (lstAutoCompleteItems.ItemContainerGenerator.ItemFromContainer(itemContainer) is AutoCompleteItem clickedItem)
 					{
 						txtInput.Text = clickedItem.Label;
+						txtInput.SelectionStart = clickedItem.Label.Length;
 						ResetClose();
 					}
 
