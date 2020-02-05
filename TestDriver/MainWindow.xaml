@@ -5,8 +5,17 @@
         Title="MainWindow" SizeToContent="Height">
     <StackPanel Margin="24">
         <Grid Height="80">
-            <autocomplete:AutoCompleteTextBox Name="txtTest" Margin="8" VerticalContentAlignment="Center" Text="test" />
+            <autocomplete:AutoCompleteTextBox Name="txtTest" Margin="8" VerticalContentAlignment="Center" Text="test" TextChanged="txtTest_TextChanged" />
         </Grid>
-        <Button Margin="8" IsDefault="True" Name="cmdSubmit" Click="cmdSubmit_Click">Submit</Button>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            
+            <Button Margin="8" IsDefault="True" Name="cmdSubmit" Click="cmdSubmit_Click">Submit</Button>
+            <Button Margin="8" Name="cmdAppend" Click="cmdAppend_Click" Grid.Column="1">Append</Button>
+        </Grid>
+        <TextBox Name="txtSubmittedInput" AcceptsReturn="True" MinHeight="50" Margin="8" />
     </StackPanel>
 </Window>

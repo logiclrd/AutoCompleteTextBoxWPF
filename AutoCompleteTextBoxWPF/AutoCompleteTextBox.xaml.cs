@@ -41,10 +41,37 @@ namespace AutoCompleteTextBoxWPF
 					RaiseEvent(new RoutedEventArgs(SelectionChangedEvent));
 				};
 
+			string raiseTextChangedForValue = null;
+
+			DependencyPropertyDescriptor.FromProperty(TextProperty, typeof(AutoCompleteTextBox)).AddValueChanged(
+				this,
+				(sender, e) =>
+				{
+					string newText = this.Text;
+
+					if (txtInput.Text != newText)
+					{
+						raiseTextChangedForValue = newText;
+						txtInput.Text = newText;
+						raiseTextChangedForValue = null;
+					}
+				});
+
 			txtInput.TextChanged +=
 				(sender, e) =>
 				{
-					RaiseEvent(new TextChangedEventArgs(TextChangedEvent, e.UndoAction, e.Changes));
+					string newText = txtInput.Text;
+
+					bool isChange = (this.Text != newText);
+					bool isValueFromOuterProperty = (newText == raiseTextChangedForValue);
+
+					if (isChange || isValueFromOuterProperty)
+					{
+						if (isChange)
+							this.Text = newText;
+
+						RaiseEvent(new TextChangedEventArgs(TextChangedEvent, e.UndoAction, e.Changes));
+					}
 				};
 
 			this.SetBinding(

@@ -35,7 +35,6 @@
                  MaxLines="{Binding MaxLines}"
                  MinLines="{Binding MinLines}"
                  Padding="0"
-                 Text="{Binding Text}"
                  TextAlignment="{Binding TextAlignment}"
                  TextDecorations="{Binding TextDecorations}"
                  UndoLimit="{Binding UndoLimit}"
